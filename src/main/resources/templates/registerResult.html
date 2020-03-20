@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Register: Fam reunion</title>
+</head>
+<body>
+<p>Welcome to the family reunion website (shit works)</p>
+<h1>Results</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>email</th>
+    </tr>
+
+<tbody>
+<tr th:each="query : ${query}">
+    <td th:text="${query.id}">Text ...</td>
+    <td th:text="${query.username}">Text ...</td>
+    <td th:text="${query.password}">Text ...</td>
+    <td th:text="${query.email}">Text...</td>
+</tr>
+</tbody>
+</table>
+
+<!--<p th:text="'id: ' + ${login.id}" />-->
+<!--<p th:text="'username: ' + ${login.username}" />-->
+<!--<p th:text="'password: ' + ${login.password}" />-->
+<!--<p th:text="'lastlogin: ' + ${login.lastLogin}" />-->
+<!--<p th:text="'lastip: ' + ${login.lastIp}" />-->
+<!--<p th:text="'level: ' + ${login.level}" />-->
+
+</body>
+</html>

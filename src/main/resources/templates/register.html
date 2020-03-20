@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Register: Fam reunion</title>
+</head>
+<body>
+<p>Welcome to the family reunion website</p>
+<h1>Form</h1>
+<form action="#" th:action="@{/register}" th:object="${login}" method="post">
+    <table>
+        <tr>
+            <div th:if="${errormessage}" th:text="${errormessage}">
+                <td><p th:text="Still not doing the if statement." /></td>
+            </div>
+        </tr>
+        <tr>
+            <td>ID:</td>
+            <td><input type="text" th:field="*{id}" /></td>
+            <td th:if="${#fields.hasErrors('id')}" th:errors="*{id}">ID Error</td>
+        </tr>
+        <tr>
+            <td>Username:</td>
+            <td><input type="text" th:field="*{username}" /></td>
+            <td th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</td>
+        </tr>
+        <tr>
+            <td>Password:</td>
+            <td><input type="text" th:field="*{password}" /></td>
+            <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</td>
+        </tr>
+        <tr>
+            <td>Email:</td>
+            <td><input type="text" th:field="*{email}" /></td>
+            <td th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</td>
+        </tr>
+        <tr>
+            <td>LastLogin:</td>
+            <td><input type="text" th:field="*{lastlogin}" /></td>
+            <td th:if="${#fields.hasErrors('lastlogin')}" th:errors="*{lastlogin}">LastLogin Error</td>
+        </tr>
+        <tr>
+            <td>LastIp:</td>
+            <td><input type="text" th:field="*{lastip}" /></td>
+            <td th:if="${#fields.hasErrors('lastip')}" th:errors="*{lastip}">LastIp Error</td>
+        </tr>
+        <tr>
+            <td>Level:</td>
+            <td><input type="text" th:field="*{level}" /></td>
+            <td th:if="${#fields.hasErrors('level')}" th:errors="*{level}">LastIp Error</td>
+        </tr>
+        <tr>
+            <td><button type="submit">Submit</button></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
