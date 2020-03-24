@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Success: Fam reunion - Address Book</title>
+</head>
+<body>
+<h2>Success!</h2>
+<p>Your information was successfully added to the address book.<br/></p>
+<h3>Results</h3>
+<table>
+    <thead>
+    <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Street Address</th>
+        <th>City</th>
+        <th>State</th>
+        <th>Country</th>
+        <th>Zip Code</th>
+    </tr>
+
+    <tbody>
+    <tr th:each="query : ${addressBook}">
+        <td th:text="${addressBook.firstname}">First Name</td>
+        <td th:text="${addressBook.lastname}">Last Name</td>
+        <td th:text="${addressBook.streetaddress}">Street Address</td>
+        <td th:text="${addressBook.city}">City</td>
+        <td th:text="${addressBook.state}">State</td>
+        <td th:text="${addressBook.country}">Country</td>
+        <td th:text="${addressBook.zipcode}">Zip Code</td>
+    </tr>
+    </tbody>
+</table>
+
+<br/><br/>
+<a href="/addressbook/single/add/">Add another single record.</a>
+</body>
+</html>

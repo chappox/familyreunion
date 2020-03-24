@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Info: Fam reunion - AddressBook</title>
+</head>
+<body>
+<h2>Begin</h2>
+<p>Welcome to the family reunion website</p>
+<h3>Form</h3>
+<form action="#" method="post" th:action="@{/addressbook/single/add/}" th:object="${addressBook}">
+    <table>
+        <tr>
+            <td>First Name:</td>
+            <td><input th:field="*{firstname}" type="text"/></td>
+            <td th:errors="*{firstname}" th:if="${#fields.hasErrors('firstname')}">Username Error</td>
+        </tr>
+        <tr>
+            <td>Last Name:</td>
+            <td><input th:field="*{lastname}" type="text"/></td>
+            <td th:errors="*{lastname}" th:if="${#fields.hasErrors('lastname')}">Password Error</td>
+        </tr>
+        <tr>
+            <td>Street Address:</td>
+            <td><input th:field="*{streetaddress}" type="text"/></td>
+            <td th:errors="*{streetaddress}" th:if="${#fields.hasErrors('streetaddress')}">Email Error</td>
+        </tr>
+        <tr>
+            <td>City:</td>
+            <td><input th:field="*{city}" type="text"/></td>
+            <td th:errors="*{city}" th:if="${#fields.hasErrors('city')}">Email Error</td>
+        </tr>
+        <tr>
+            <td>State:</td>
+            <td><input th:field="*{state}" type="text"/></td>
+            <td th:errors="*{state}" th:if="${#fields.hasErrors('state')}">Email Error</td>
+        </tr>
+        <tr>
+            <td>Country:</td>
+            <td><input th:field="*{country}" type="text"/></td>
+            <td th:errors="*{country}" th:if="${#fields.hasErrors('country')}">Email Error</td>
+        </tr>
+        <tr>
+            <td>Zip Code:</td>
+            <td><input th:field="*{zipcode}" type="text"/></td>
+            <td th:errors="*{zipcode}" th:if="${#fields.hasErrors('zipcode')}">Email Error</td>
+        </tr>
+        <td>
+            <button type="submit">Submit</button>
+        </td>
+        </tr>
+    </table>
+</form>
+
+<form action="#" method="post" th:action="@{/addressbook/single/add/}" th:object="${errorMessage}">
+    <table>
+        <tr>
+            <td><p th:text="${errorMessage.errormessage}"/></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Success: Fam reunion - Address Book</title>
+</head>
+<body>
+<h2>Success!</h2>
+<p>The data has been purged from the database.<br/></p>
+<h3>Results</h3>
+<table>
+    <thead>
+    <tr>
+        <th></th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Street Address</th>
+        <th>City</th>
+        <th>State</th>
+        <th>Country</th>
+        <th>Zip Code</th>
+    </tr>
+
+    <tbody>
+    <tr th:each="query : ${dataPull}">
+        <td><input id="${query.id}" name="removeId" th: th:value="${query.id}" type="radio"></td>
+        <td th:text="${query.firstname}">First Name</td>
+        <td th:text="${query.lastname}">Last Name</td>
+        <td th:text="${query.streetaddress}">Street Address</td>
+        <td th:text="${query.city}">City</td>
+        <td th:text="${query.state}">State</td>
+        <td th:text="${query.country}">Country</td>
+        <td th:text="${query.zipcode}">Zip Code</td>
+    </tr>
+    </tr>
+    <td>
+        <button type="submit">Submit</button>
+    </td>
+    </tr>
+    </tbody>
+</table>
+
+
+<form action="#" method="post" th:action="@{/addressbook/single/remove/}" th:object="${errorMessage}">
+    <table>
+        <tr>
+            <td><p th:text="${errorMessage.errormessage}"/></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

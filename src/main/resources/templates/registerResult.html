@@ -2,28 +2,27 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Register: Fam reunion</title>
+    <title>Success: Fam reunion - Registration</title>
 </head>
 <body>
-<p>Welcome to the family reunion website (shit works)</p>
-<h1>Results</h1>
+<h2>Success!</h2>
+<p>Your account was successfully added to the database. You are now able to login.<br/></p>
+<h3>Results</h3>
 <table>
     <thead>
     <tr>
-        <th>ID</th>
         <th>Username</th>
+        <th>Password</th>
         <th>Email</th>
-        <th>email</th>
     </tr>
 
-<tbody>
-<tr th:each="query : ${query}">
-    <td th:text="${query.id}">Text ...</td>
-    <td th:text="${query.username}">Text ...</td>
-    <td th:text="${query.password}">Text ...</td>
-    <td th:text="${query.email}">Text...</td>
-</tr>
-</tbody>
+    <tbody>
+    <tr th:each="query : ${login}">
+        <td th:text="${login.username}">Username</td>
+        <td th:text="${login.password}">Password</td>
+        <td th:text="${login.email}">Email</td>
+    </tr>
+    </tbody>
 </table>
 
 <!--<p th:text="'id: ' + ${login.id}" />-->

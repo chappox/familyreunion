@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit: Fam reunion - Address Book</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<form action="#" method="post" th:action="@{/addressbook/single/remove/}" th:object="${errorMessage}">
+    <table>
+        <tr>
+            <td><p th:text="${errorMessage.errormessage}"/></td>
+        </tr>
+    </table>
+</form>
+<h2>Begin!</h2>
+<p>Please select the row of data that needs to be removed.<br/></p>
+<h3>Results</h3>
+<table>
+    <thead>
+    <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Street Address</th>
+        <th>City</th>
+        <th>State</th>
+        <th>Country</th>
+        <th>Zip Code</th>
+    </tr>
+
+    <tbody>
+    <tr th:each="query : ${dataPull}">
+        <td th:text="${query.firstname}">First Name</td>
+        <td th:text="${query.lastname}">Last Name</td>
+        <td th:text="${query.streetaddress}">Street Address</td>
+        <td th:text="${query.city}">City</td>
+        <td th:text="${query.state}">State</td>
+        <td th:text="${query.country}">Country</td>
+        <td th:text="${query.zipcode}">Zip Code</td>
+        <td><a th:href="@{/addressbook/single/edit/{id}(id=${query.id})}">
+            <button type="submit">Edit</button>
+        </a>
+        </td>
+    </tr>
+    </tbody>
+
+</table>
+</body>
+</body>
+</html>

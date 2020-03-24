@@ -2,19 +2,17 @@ package teamhierro.familyreunion.service;
 
 import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import teamhierro.familyreunion.model.Login;
 import teamhierro.familyreunion.repository.RegisterRepository;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.sql.DataSource;
 
 @Service
 public class RegisterService {
@@ -26,9 +24,9 @@ public class RegisterService {
     private DataSource dataSource;
 
     private JdbcTemplate jdbcTemplate;
-    private String username, password, email, lastip, sql, ipAddress;
-    private Date date, today = Calendar.getInstance().getTime();;
-    private int level=0;
+    private String username, password, email, lastip, sql, ipAddress, dbField, dbValue;
+    private Date date, today = Calendar.getInstance().getTime();
+    private int level = 0;
     private HttpServletRequest remoteIp = null;
 
     public void setDataSource(DataSource dataSource) {
@@ -36,67 +34,59 @@ public class RegisterService {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public List<Login> findAll(){
+    public List<Login> findAll() {
         var it = repository.findAll();
 
-        var users = new ArrayList<Login>();
-        it.forEach(e -> users.add(e));
+        var login = new ArrayList<Login>();
+        it.forEach(e -> login.add(e));
 
-        return users;
+        return login;
     }
 
     public Long count(){
         return repository.count();
     }
 
-    public boolean addUser(String username, String password, String email, Date date, String lastip, int level ) {
+    public boolean addUser(String username, String password, String email) {
         this.username = username;
         this.password = password;
         this.email = email;
-        this.date = (date == null) ? today : date;
-        this.lastip = (lastip == null) ? remoteIp.getRemoteAddr() : lastip;
-        this.level = (level == 0) ? 0 : level;
-        this.sql = "INSERT INTO login(username, password, email, lastlogin, lastip, level) VALUES (?, ?, ?, ?, ?)";
+        this.date = today;
+        this.lastip = "127.0.0.1";
+        /*this.lastip = remoteIp.getRemoteAddr();*/
+        this.level = 0;
+        this.sql = "INSERT INTO login(username, password, email, lastlogin, lastip, level) VALUES (?, ?, ?, ?, ?, ?)";
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 
-        try {
-            jdbcTemplate.update(this.sql, this.username, this.password, this.email, this.date, this.lastip, this.level);
-            System.out.println("The following user's data was added to the database: " + this.username);
-            return true;
-        } catch (DataAccessException e) {
-            System.out.println("There was an error putting the user " + this.username + " into the database.");
-        }
-        return false;
+        jdbcTemplate.update(this.sql, this.username, this.password, this.email, this.date, this.lastip, this.level);
+        /*
+         * Troubleshooting
+         * System.out.println("The user was not successfully added to the database.");
+         * */
+        return checkUserCredential("email", this.email);
+        /*
+         * Troubleshooting
+         * System.out.println("The following user's data was added to the database: " + this.username);
+         * */
     }
 
-    public boolean checkUserByUsername(String username) {
-        this.username = username;
-        this.sql = "SELECT * FROM login WHERE username = ?";
+    public boolean checkUserCredential(String dbField, String dbValue) {
+
+        this.dbField = dbField;
+        this.dbValue = dbValue;
+        this.sql = "SELECT COUNT(*) FROM login WHERE " + this.dbField + " = ?";
 
         jdbcTemplate = jdbcTemplate = new JdbcTemplate(dataSource);
-        try {
-            jdbcTemplate.update(sql, this.username);
-            System.out.println("The username exists already");
-            return true;
-        } catch (DataAccessException e) {
-            System.out.println("The user " + this.username + " is not taken yet.");
-            return false;
-        }
-    }
-
-    public boolean checkUserByEmail(String email) {
-        this.email = email;
-        this.sql = "SELECT * FROM login WHERE email = ?";
-
-        jdbcTemplate = jdbcTemplate = new JdbcTemplate(dataSource);
-        try {
-            jdbcTemplate.update(sql, this.email);
-            System.out.println("The email exists already");
-            return true;
-        } catch (DataAccessException e) {
-            System.out.println("The user " + this.email + " is not taken yet.");
-            return false;
-        }
+        int dbEmailCount = jdbcTemplate.queryForObject(sql, new Object[]{this.dbValue}, Integer.class);
+        /*
+         * Troubleshooting
+         * System.out.println("The " + this.dbField + " exists.");
+         * */
+        return dbEmailCount > 0;
+        /*
+         * Troubleshooting
+         * System.out.println("The " + this.dbField + ": " + this.dbValue + " is not taken yet.");
+         * */
     }
 }
