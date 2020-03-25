@@ -39,14 +39,37 @@ public class AddressBookService {
         return address;
     }
 
-    public Long count() {
-        return repository.count();
+    public boolean findById(int id) {
+        if (checkifIdExists(id)) {
+
+            this.sql = "SELECT * FROM addressbook WHERE id = ?";
+
+            JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+            var userData = jdbcTemplate.update(this.sql, id);
+
+            return true;
+        }
+
+        return false;
     }
 
     public Optional<AddressBook> findById(Integer id) {
         var it = repository.findById(id);
 
         return it;
+    }
+
+    public Long count() {
+        return repository.count();
+    }
+
+    public List<AddressBook> singleView(Integer id) {
+        var it = repository.findAll();
+
+        var address = new ArrayList<AddressBook>();
+        address.stream().filter(AddressBook -> id.equals(AddressBook.getId()));
+
+        return address;
     }
 
     public boolean addAddress(String firstname, String lastname, String streetaddress, String city, String state, String country, String zipcode) {
@@ -130,7 +153,11 @@ public class AddressBookService {
 
         dbRecordCount = jdbcTemplate.queryForObject(sql, new Object[]{this.id}, Integer.class);
 
-        return dbRecordCount > 0;
+        if (dbRecordCount > 0) {
+            return true;
+        }
+
+        return false;
     }
 
     public boolean checkIfExists(String dbField, String dbValue, String dbField2, String dbValue2) {
