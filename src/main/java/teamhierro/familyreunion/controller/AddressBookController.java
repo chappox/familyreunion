@@ -1,6 +1,5 @@
 package teamhierro.familyreunion.controller;
 
-import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -147,29 +146,10 @@ public class AddressBookController {
         }
         // if it exists, extract from list
         List<AddressBook> dataPull = service.findAll();
-        var singleRow = dataPull.stream().filter(dataRecord -> dataRecord.getId() == id).findFirst();
+        dataPull.stream().filter(dataRecord -> dataRecord.getId() == id).findFirst().ifPresent(dataRecord -> model.addAttribute("dataPull", dataRecord));
         // add record to view
-        model.addAttribute("dataPull", singleRow);
+//        model.addAttribute("dataPull", singleRow);
         return "/addressbook/showViewSingle";
     }
 
-    @GetMapping("/addressbook/mass/add")
-    public String showMassAddForm(AddressBook addressBook) {
-        return "showMassAddForm";
-    }
-
-    @GetMapping("/addressbook/mass/remove")
-    public String showMassRemoveForm(AddressBook addressBook) {
-        return "showMassRemoveForm";
-    }
-
-    @GetMapping("/addressbook/mass/edit")
-    public String showMassEditForm(AddressBook addressBook) {
-        return "showMassEditForm";
-    }
-
-    @GetMapping("/addressbook/mass/view")
-    public String showMassView(AddressBook addressBook) {
-        return "showMassView";
-    }
 }
